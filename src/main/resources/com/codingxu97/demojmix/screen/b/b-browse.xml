@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://jmix.io/schema/ui/window"
+        xmlns:c="http://jmix.io/schema/ui/jpql-condition"
+        caption="msg://BBrowse.caption"
+        focusComponent="bsTable">
+    <data readOnly="true">
+        <collection id="bsDc"
+                    class="com.codingxu97.demojmix.entity.B">
+            <fetchPlan extends="_base">
+                <property name="a" fetchPlan="_instance_name"/>
+                <property name="name"/>
+            </fetchPlan>
+            <loader id="bsDl">
+                <query>
+                    <![CDATA[select e from B e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+        <screenSettings id="settingsFacet" auto="true"/>
+    </facets>
+    <actions>
+        <action id="lookupSelectAction"
+                caption="msg:///actions.Select"
+                icon="LOOKUP_OK"
+                primary="true"
+                shortcut="${COMMIT_SHORTCUT}"/>
+        <action id="lookupCancelAction"
+                caption="msg:///actions.Cancel"
+                icon="LOOKUP_CANCEL"/>
+    </actions>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="bsTable" spacing="true">
+        <filter id="filter"
+                dataLoader="bsDl">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="bsTable"
+                    width="100%"
+                    dataContainer="bsDc">
+            <actions>
+                <action id="create" type="create"/>
+                <action id="edit" type="edit"/>
+                <action id="remove" type="remove"/>
+            </actions>
+            <columns>
+                <column id="a"/>
+                <column id="name"/>
+            </columns>
+            <simplePagination/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn" action="bsTable.create"/>
+                <button id="editBtn" action="bsTable.edit"/>
+                <button id="removeBtn" action="bsTable.remove"/>
+            </buttonsPanel>
+        </groupTable>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>
